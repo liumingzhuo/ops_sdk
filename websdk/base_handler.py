@@ -48,6 +48,7 @@ class BaseHandler(RequestHandler):
         else:
             # auth_token = AuthToken()
             # user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
+            print(jwt.decode(auth_key, verify=False))
             user_info = jwt.decode(auth_key, verify=False).get('data')
             if not user_info:
                 raise HTTPError(401, 'auth failed')
@@ -57,6 +58,7 @@ class BaseHandler(RequestHandler):
             self.nickname = user_info.get('nickname', None)
             self.email = user_info.get('email', None)
             self.is_super = user_info.get('is_superuser', False)
+            self.department = user_info.get('department', '')
 
             if not self.user_id:
                 raise HTTPError(401, 'auth failed')
@@ -66,6 +68,7 @@ class BaseHandler(RequestHandler):
                 self.set_secure_cookie("nickname", self.nickname)
                 self.set_secure_cookie("username", self.username)
                 self.set_secure_cookie("email", str(self.email))
+                self.set_secure_cookie('department', str(self.department))
         self.is_superuser = self.is_super
         ### SDK 不用处理鉴权
         #         my_verify = MyVerify(self.user_id)
@@ -95,7 +98,6 @@ class BaseHandler(RequestHandler):
         return self.email
 
     def get_department(self):
-
         return self.department
 
     def is_superuser(self):

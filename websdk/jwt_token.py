@@ -6,7 +6,7 @@ from .configs import configs as my_configs
 
 class AuthToken:
     def __init__(self):
-        self.token_secret = my_configs.get('token_secret', '3AIiOq18i~H=WWTIGq4ODQyMzcsIdfghs')
+        self.token_secret = my_configs.get('token_secret', 'pXFb4i%*834gfdh96(3df&%18iodGq4ODQyMzc4lz7yI6Imqwer')
 
     def encode_auth_token(self, **kwargs):
         """
@@ -17,6 +17,7 @@ class AuthToken:
         :return: string
         """
         try:
+            print('kwargs----<', kwargs)
             exp_time = kwargs.get('exp_time', 1)
             payload = {
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=int(exp_time), seconds=10),
@@ -30,6 +31,7 @@ class AuthToken:
                     'username': kwargs.get('username', ''),
                     'nickname': kwargs.get('nickname', ''),
                     'email': kwargs.get('email', ''),
+                    'department': kwargs.get('department', ''),
                     'is_superuser': kwargs.get('is_superuser', False)
                 }
             }
