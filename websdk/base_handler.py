@@ -57,7 +57,6 @@ class BaseHandler(RequestHandler):
             self.username = user_info.get('username', None)
             self.nickname = user_info.get('nickname', None)
             self.email = user_info.get('email', None)
-            self.department = user_info.get('department', None)
             self.is_super = user_info.get('is_superuser', False)
 
             if not self.user_id:
@@ -68,7 +67,6 @@ class BaseHandler(RequestHandler):
                 self.set_secure_cookie("nickname", self.nickname)
                 self.set_secure_cookie("username", self.username)
                 self.set_secure_cookie("email", str(self.email))
-                self.set_secure_cookie("department", str(self.department))
         self.is_superuser = self.is_super
         ### SDK 不用处理鉴权
         #         my_verify = MyVerify(self.user_id)
@@ -99,7 +97,7 @@ class BaseHandler(RequestHandler):
 
     def get_department(self):
 
-        return self.department
+        return self.current_user
 
     def is_superuser(self):
         return self.is_superuser
