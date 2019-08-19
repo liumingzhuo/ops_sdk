@@ -57,7 +57,7 @@ class BaseHandler(RequestHandler):
             self.nickname = user_info.get('nickname', None)
             self.email = user_info.get('email', None)
             self.is_super = user_info.get('is_superuser', False)
-            self.department = user_info.get('department', None)
+            self.department = user_info.get('department', "hello")
 
             if not self.user_id:
                 raise HTTPError(401, 'auth failed')
