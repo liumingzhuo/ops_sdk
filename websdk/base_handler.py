@@ -68,6 +68,7 @@ class BaseHandler(RequestHandler):
                 self.set_secure_cookie("nickname", self.nickname)
                 self.set_secure_cookie("username", self.username)
                 self.set_secure_cookie("email", str(self.email))
+                self.set_secure_cookie("department", str(self.email))
         self.is_superuser = self.is_super
         ### SDK 不用处理鉴权
         #         my_verify = MyVerify(self.user_id)
