@@ -6,7 +6,7 @@ from .configs import configs as my_configs
 
 class AuthToken:
     def __init__(self):
-        self.token_secret = my_configs.get('token_secret', 'pXFb4i%*834gfdh96(3df&%18iodGq4ODQyMzc4lz7yI6Imqwer')
+        self.token_secret = my_configs.get('token_secret', '1111')
 
     def encode_auth_token(self, **kwargs):
         """
