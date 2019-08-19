@@ -30,6 +30,7 @@ class AuthToken:
                     'username': kwargs.get('username', ''),
                     'nickname': kwargs.get('nickname', ''),
                     'email': kwargs.get('email', ''),
+                    'department': kwargs.get('department', ''),
                     'is_superuser': kwargs.get('is_superuser', False)
                 }
             }

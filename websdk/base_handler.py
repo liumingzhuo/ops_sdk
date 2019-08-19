@@ -49,6 +49,7 @@ class BaseHandler(RequestHandler):
             # auth_token = AuthToken()
             # user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
             user_info = jwt.decode(auth_key, verify=False).get('data')
+            print(user_info)
             if not user_info:
                 raise HTTPError(401, 'auth failed')
 
@@ -56,8 +57,8 @@ class BaseHandler(RequestHandler):
             self.username = user_info.get('username', None)
             self.nickname = user_info.get('nickname', None)
             self.email = user_info.get('email', None)
+            self.department = user_info.get('department', None)
             self.is_super = user_info.get('is_superuser', False)
-            self.department = user_info.get('department', "hello")
 
             if not self.user_id:
                 raise HTTPError(401, 'auth failed')
@@ -96,6 +97,7 @@ class BaseHandler(RequestHandler):
         return self.email
 
     def get_department(self):
+
         return self.department
 
     def is_superuser(self):
