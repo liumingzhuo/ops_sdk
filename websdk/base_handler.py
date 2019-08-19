@@ -4,7 +4,7 @@
 import shortuuid
 from .cache import get_cache
 from tornado.web import RequestHandler, HTTPError
-# from .jwt_token import AuthToken
+from .jwt_token import AuthToken
 import jwt
 
 
@@ -46,10 +46,9 @@ class BaseHandler(RequestHandler):
             raise HTTPError(401, 'auth failed')
 
         else:
-            # auth_token = AuthToken()
-            # user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
-            print(jwt.decode(auth_key, verify=False))
-            user_info = jwt.decode(auth_key, verify=False).get('data')
+            auth_token = AuthToken()
+            user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
+            # user_info = jwt.decode(auth_key, verify=False).get('data')
             if not user_info:
                 raise HTTPError(401, 'auth failed')
 
@@ -58,7 +57,7 @@ class BaseHandler(RequestHandler):
             self.nickname = user_info.get('nickname', None)
             self.email = user_info.get('email', None)
             self.is_super = user_info.get('is_superuser', False)
-            self.department = user_info.get('department', '')
+            self.department = user_info.get('department', None)
 
             if not self.user_id:
                 raise HTTPError(401, 'auth failed')
