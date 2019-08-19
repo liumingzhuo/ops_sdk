@@ -4,7 +4,7 @@
 import shortuuid
 from .cache import get_cache
 from tornado.web import RequestHandler, HTTPError
-from .jwt_token import AuthToken
+# from .jwt_token import AuthToken
 import jwt
 
 
@@ -46,10 +46,9 @@ class BaseHandler(RequestHandler):
             raise HTTPError(401, 'auth failed')
 
         else:
-            auth_token = AuthToken()
-            user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
-            # user_info = jwt.decode(auth_key, verify=False).get('data')
-            print(user_info)
+            # auth_token = AuthToken()
+            # user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
+            user_info = jwt.decode(auth_key, verify=False).get('data')
             if not user_info:
                 raise HTTPError(401, 'auth failed')
 
@@ -57,7 +56,6 @@ class BaseHandler(RequestHandler):
             self.username = user_info.get('username', None)
             self.nickname = user_info.get('nickname', None)
             self.email = user_info.get('email', None)
-            self.department = user_info.get('department', None)
             self.is_super = user_info.get('is_superuser', False)
 
             if not self.user_id:
@@ -67,7 +65,6 @@ class BaseHandler(RequestHandler):
                 self.set_secure_cookie("user_id", self.user_id)
                 self.set_secure_cookie("nickname", self.nickname)
                 self.set_secure_cookie("username", self.username)
-                self.set_secure_cookie("department", str(self.department))
                 self.set_secure_cookie("email", str(self.email))
         self.is_superuser = self.is_super
         ### SDK 不用处理鉴权
