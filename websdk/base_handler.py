@@ -46,9 +46,9 @@ class BaseHandler(RequestHandler):
             raise HTTPError(401, 'auth failed')
 
         else:
-            auth_token = AuthToken()
-            user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
-            # user_info = jwt.decode(auth_key, verify=False).get('data')
+            # auth_token = AuthToken()
+            # user_info = auth_token.decode_auth_token(auth_key)  ### 验证权限
+            user_info = jwt.decode(auth_key, verify=False).get('data')
             if not user_info:
                 raise HTTPError(401, 'auth failed')
 
