@@ -101,8 +101,9 @@ class SaltApi:
             else:
                 t += 5
             result = self.look_jid(jid)
-            for i in result.keys():
-                return i, result[i]['retcode'], result[i]['stdout'], result[i]['stderr']
+            return result
+            # for i in result.keys():
+            #     return i, result[i]['retcode'], result[i]['stdout'], result[i]['stderr']
 
     def salt_alive(self, tgt):
         '''
