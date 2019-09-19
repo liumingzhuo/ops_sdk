@@ -36,4 +36,4 @@ def cache_conn(key=None, db=None):
         else:
             redis_pool = redis.ConnectionPool(host=host, port=port, db=db, decode_responses=return_utf8)
         cache_conns[config_key] = redis.StrictRedis(connection_pool=redis_pool)
-    return cache_conns[key]
+    return cache_conns[key], redis_configs
