@@ -22,7 +22,6 @@ cache_conns = {}
 
 def cache_conn(key=None, db=None):
     redis_configs = configs[const.REDIS_CONFIG_ITEM]
-    logging.info('cache_context----%s' % redis_configs)
     if not key:
         key = const.DEFAULT_RD_KEY
     for config_key, redis_config in redis_configs.items():
@@ -44,5 +43,4 @@ def cache_conn(key=None, db=None):
         else:
             redis_pool = redis.ConnectionPool(host=host, port=port, db=db, decode_responses=return_utf8)
         cache_conns[config_key] = redis.StrictRedis(connection_pool=redis_pool)
-    logging.info('cache_conns----%s' % cache_conns[key])
     return cache_conns[key]
