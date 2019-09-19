@@ -14,7 +14,7 @@ import logging
 
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-logging.basicConfig(filename='/var/log/supervisor/mg.log', level=logging.ERROR, format=LOG_FORMAT,
+logging.basicConfig(filename='/var/log/supervisor/mg.log', level=logging.INFO, format=LOG_FORMAT,
                     datefmt=DATE_FORMAT)
 
 cache_conns = {}
