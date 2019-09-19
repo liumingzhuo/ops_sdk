@@ -10,11 +10,20 @@ import redis
 from .consts import const
 from .configs import configs
 
+import logging
+
+DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+logging.basicConfig(filename='/var/log/supervisor/ops_sdk.log', level=logging.INFO, format=LOG_FORMAT,
+                    datefmt=DATE_FORMAT)
+
 cache_conns = {}
 
 
 def cache_conn(key=None, db=None):
+    logging.info('----cache_conn---before----')
     redis_configs = configs[const.REDIS_CONFIG_ITEM]
+    logging.info('cache_context----%s' % redis_configs)
     if not key:
         key = const.DEFAULT_RD_KEY
     for config_key, redis_config in redis_configs.items():
@@ -36,4 +45,4 @@ def cache_conn(key=None, db=None):
         else:
             redis_pool = redis.ConnectionPool(host=host, port=port, db=db, decode_responses=return_utf8)
         cache_conns[config_key] = redis.StrictRedis(connection_pool=redis_pool)
-    return cache_conns[key], redis_configs
+    return cache_conns[key]
