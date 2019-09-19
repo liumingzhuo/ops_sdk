@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*-coding:utf-8-*-
 '''
-Author : SS
-date   : 2017年12月29日14:43:24
 role   : 集中化管理工具的使用
 '''
 
