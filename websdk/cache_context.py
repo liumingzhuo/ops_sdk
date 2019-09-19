@@ -22,7 +22,7 @@ cache_conns = {}
 
 def cache_conn(key=None, db=None):
     redis_configs = configs[const.REDIS_CONFIG_ITEM]
-    logging.info('cache_context----' + redis_configs)
+    logging.info('cache_context----%s' % redis_configs)
     if not key:
         key = const.DEFAULT_RD_KEY
     for config_key, redis_config in redis_configs.items():
