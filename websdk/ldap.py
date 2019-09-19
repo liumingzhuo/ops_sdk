@@ -9,6 +9,13 @@ Desc    : 对接LDAP登录认证
 
 from ldap3 import Server, Connection, ALL, SUBTREE, ServerPool
 
+import logging
+
+DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+logging.basicConfig(filename='/var/log/supervisor/ops_sdk.log', level=logging.INFO, format=LOG_FORMAT,
+                    datefmt=DATE_FORMAT)
+
 
 class LdapApi:
     def __init__(self, ldap_server_host, ldap_admin_dn, ldap_admin_password, ldap_server_port=389, ldap_use_ssl=False):
@@ -36,12 +43,12 @@ class LdapApi:
                           check_names=True, lazy=False, raise_exceptions=False)
         conn.open()
         conn.bind()
-
+        logging.info('----ldap----%s---%s' % (search_filter, username))
         res = conn.search(search_base=search_base,
                           search_filter='({}={})'.format(search_filter, username),
                           search_scope=SUBTREE,
                           # attributes=['cn', 'givenName', 'email', 'mail', 'sAMAccountName'],
-                          paged_size=5)
+                          attributes=['cn', 'displayName', 'mail'], paged_size=5)
 
         if res:
             entry = conn.response[0]
