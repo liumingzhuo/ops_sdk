@@ -21,6 +21,7 @@ cache_conns = {}
 
 
 def cache_conn(key=None, db=None):
+    logging.info('----cache_conn---before----')
     redis_configs = configs[const.REDIS_CONFIG_ITEM]
     logging.info('cache_context----%s' % redis_configs)
     if not key:
