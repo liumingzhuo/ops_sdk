@@ -43,12 +43,11 @@ class LdapApi:
                           check_names=True, lazy=False, raise_exceptions=False)
         conn.open()
         conn.bind()
-        logging.info('----ldap----%s---%s' % (search_filter, username))
         res = conn.search(search_base=search_base,
                           search_filter='({}={})'.format(search_filter, username),
                           search_scope=SUBTREE,
                           # attributes=['cn', 'givenName', 'email', 'mail', 'sAMAccountName'],
-                          attributes=['cn', 'displayName', 'mail'], paged_size=5)
+                          attributes=['cn', 'email', 'mail'], paged_size=5)
 
         if res:
             entry = conn.response[0]
