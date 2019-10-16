@@ -22,7 +22,7 @@ class LdapApi:
         self._ldap_admin_dn = ldap_admin_dn
         self._ldap_admin_password = ldap_admin_password
         # ldap_server_pool = ServerPool(["172.16.0.102",'172.16.0.103'])
-        self.ldap_server = Server(ldap_server_host, port=ldap_server_port, use_ssl=ldap_use_ssl)
+        self.ldap_server = Server(ldap_server_host, port=ldap_server_port, use_ssl=ldap_use_ssl, connect_timeout=10)
 
     def ldap_server_test(self):
         try:
@@ -48,8 +48,7 @@ class LdapApi:
                           search_filter='({}={})'.format(search_filter, username),
                           search_scope=SUBTREE,
                           # attributes=['cn', 'givenName', 'email', 'mail', 'sAMAccountName'],
-                          attributes=['cn', 'email', 'mail'],
-                          paged_size=5)
+                          attributes=['cn', 'email', 'mail'], paged_size=5)
 
         if res:
             entry = conn.response[0]
@@ -81,7 +80,7 @@ class LdapApi:
 
 
 if __name__ == "__main__":
-    obj = LdapApi('172.16.0.102', 'cn=Manager,DC=shinezone,DC=com', '070068')
+    obj = LdapApi('172.16.10.7', 'cn=root,DC=root,DC=net', '070068')
     print(obj.ldap_server_test())
     print('____________')
     print(obj.ldap_auth("yanghongfei", "123456", 'ou=opendevops,dc=shinezone,dc=com', 'cn'))
